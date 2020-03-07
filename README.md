@@ -11,6 +11,7 @@ You may choose a project of any theme, but we encourage you to think broadly.
 You will have ample time in class to work with your group, but expect to put in hours outside of class as well. 
 
 Specific Requirements
+
 Your visualization must include a Python Flask–powered RESTful API, HTML/CSS, JavaScript, and at least one database (SQL, MongoDB, SQLite, etc.). 
 Your project should fall into one of the below four tracks: 
 A custom “creative” D3.js project (i.e., a nonstandard graph or chart)
