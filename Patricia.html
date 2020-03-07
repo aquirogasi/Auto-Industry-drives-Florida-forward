@@ -1,0 +1,138 @@
+2018 Data for total amount of traffic violations in Miami \n
+Total number of violations was 700,437
+Between Florida Highway Patrol (69,597) and City Police Department (630,516)
+<!-- Styles -->
+<style>
+#chartdiv {
+  height: 650px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/sunburst.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/moonrisekingdom.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_moonrisekingdom);
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// create chart
+var chart = am4core.create("chartdiv", am4plugins_sunburst.Sunburst);
+chart.padding(0,0,0,0);
+chart.radius = am4core.percent(98);
+
+chart.data = [{
+  name: "Criminal",
+  children: [
+    { name: "DUI", value: 2758 },
+    { name: "RECKLESS", value: 934 },
+    { name: "LEAVING THE SCENE", value: 1787 },
+    { name: "FLEEING", value: 210 },
+    { name: "RACING ON THE HIGHWAY", value: 208 },
+    { name: "NO / IMPROPER / EXPIRED DRIVER LICENSE", value: 15724 },
+    { name: "DRIVING WHILE LICENSE SUSPENDED OR REVOKED ", value: 15724 },
+    { name: "VIOLATION OF DRIVER LICENSE RESTRICTION", value: 25303 },
+    { name: "UNLAWFUL USE OF DRIVER LICENSE", value: 30 },
+    { name: "NO / IMPROPER / EXPIRED VEHICLE TAG ", value: 1155},
+    { name: "OTHER ", value: 1155}
+  ]
+},
+{
+  name: "NON-CRIMINAL",
+  children: [
+    { name: "SPEEDING", value: 77525 },
+    { name: "SPEED TOO FAST FOR CONDITIONS", value: 1267 },
+    { name: "CARELESS DR", value: 50257 },
+    { name: "UNKDR/DL/SUS/RV", value: 14046 },
+    { name: "FL/YLD/R-O-W", value: 16463},
+    { name: "R/STOP SIGN", value: 27725},
+    { name:"RED LIGHT CAMERA", value: 131338},
+    { name: "RAN RED LIGHT",value:16359},
+    { name: "TR/CNTL/DEV", value: 26233},
+    { name: "IMP TURN",value:10536},
+    { name: "F/T/S SCHOOL BUS",value: 213},
+    { name: "IMP PASSING",value:6317},
+    { name: "FOLLOW/CLOSE", value: 3267},
+    { name: "W/SIDE OF RD", value: 3290},
+    { name: "IMP LANE CHG", value: 24406},
+    { name: "IMP BACKING", value: 6608},
+    { name: "TEXT/DRIVING(M)",value: 3},
+    { name: "DR/W-O/LIGHT", value:2441},
+    { name: "FAIL/DIM/LIGHTS", value:495},
+    { name: "CHILD RESTRAINT",value:1081},
+    { name: "TOLL VIOLATIONS",value:246},
+    { name: "OTHER MOV",value:12793}
+
+  ]
+}, 
+{
+  name: "NON-MOVING INFRACTIONS",
+  children: [
+
+        { name: "IMP PARKING", value: 4446 },
+        { name: "LOAD/LEAK/DP", value: 243 },
+        { name: "NO HELMET", value: 55 },
+        { name: "DEF/UNSAFE EQUIP", value: 1114 },
+        { name: "LOAD/LEAK/DP", value: 19793 },
+        { name: "SEAT BELT VIOL", value: 20485 },
+        { name: "EXP/FAIL DISP DL", value: 14251 },
+        { name: "EXP/FAIL DISP TAG", value: 76094 },
+        { name: "NO PROOF OF INSUR.", value: 46015 },
+        { name: "TEXTING/DRIVING", value: 438},
+        { name: "BICYCLE/PED", value: 1086 },
+        { name: "OTHER", value: 22608 }
+      ]
+
+}];
+
+chart.colors.step = 2;
+chart.fontSize = 7;
+chart.innerRadius = am4core.percent(10);
+
+// define data fields
+chart.dataFields.value = "value";
+chart.dataFields.name = "name";
+chart.dataFields.children = "children";
+
+
+var level0SeriesTemplate = new am4plugins_sunburst.SunburstSeries();
+level0SeriesTemplate.hiddenInLegend = false;
+chart.seriesTemplates.setKey("0", level0SeriesTemplate)
+
+// this makes labels to be hidden if they don't fit
+level0SeriesTemplate.labels.template.truncate = true;
+level0SeriesTemplate.labels.template.hideOversized = true;
+
+level0SeriesTemplate.labels.template.adapter.add("rotation", function(rotation, target) {
+  target.maxWidth = target.dataItem.slice.radius - target.dataItem.slice.innerRadius - 10;
+  target.maxHeight = Math.abs(target.dataItem.slice.arc * (target.dataItem.slice.innerRadius + target.dataItem.slice.radius) / 2 * am4core.math.RADIANS);
+
+  return rotation;
+})
+
+
+var level1SeriesTemplate = level0SeriesTemplate.clone();
+chart.seriesTemplates.setKey("1", level1SeriesTemplate)
+level1SeriesTemplate.fillOpacity = 0.75;
+level1SeriesTemplate.hiddenInLegend = true;
+
+var level2SeriesTemplate = level0SeriesTemplate.clone();
+chart.seriesTemplates.setKey("2", level2SeriesTemplate)
+level2SeriesTemplate.fillOpacity = 0.5;
+level2SeriesTemplate.hiddenInLegend = true;
+
+chart.legend = new am4charts.Legend();
+
+}); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>
